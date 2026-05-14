@@ -29,81 +29,27 @@ from email.mime.multipart import MIMEMultipart
 # BACKGROUND IMAGE HELPER
 # ─────────────────────────────────────────────
 def get_base64_image(image_path):
-    """Convert a local image file to base64 string for CSS embedding."""
     try:
         with open(image_path, "rb") as f:
             return base64.b64encode(f.read()).decode()
-    except FileNotFoundError:
+    except:
         return None
 
-def set_background(image_path=None, image_url=None, overlay_opacity=0.55):
-    """
-    Set a background image for the Streamlit app.
-    
-    Args:
-        image_path (str): Path to a local image file (e.g., "background.jpg")
-        image_url  (str): URL of an online image (used if image_path is None or not found)
-        overlay_opacity (float): Dark overlay opacity 0.0–1.0 (default 0.55)
-    
-    Usage examples:
-        set_background(image_path="background.jpg")
-        set_background(image_url="https://images.unsplash.com/photo-1519692933481-e162a57d6721?w=1920")
-        set_background(image_path="bg.jpg", overlay_opacity=0.4)
-    """
-    bg_css = ""
-
-    # Try local file first
-    if image_path:
-        b64 = get_base64_image(image_path)
-        if b64:
-            ext = image_path.rsplit(".", 1)[-1].lower()
-            mime = {"jpg": "jpeg", "jpeg": "jpeg", "png": "png", "webp": "webp"}.get(ext, "jpeg")
-            bg_css = f'background-image: url("data:image/{mime};base64,{b64}");'
-
-    # Fall back to URL if no local image
-    if not bg_css and image_url:
-        bg_css = f'background-image: url("{image_url}");'
-
-    # Default fallback: dark gradient (no image)
-    if not bg_css:
-        bg_css = "background: linear-gradient(135deg, #0a0e1a 0%, #0d1b2a 50%, #0a1628 100%);"
+def set_background(image_path=None):
+    b64 = get_base64_image(image_path)
+    if b64:
+        bg = f'url("data:image/png;base64,{b64}")'
+    else:
+        bg = "linear-gradient(135deg,#0a0e1a,#0d1b2a)"
 
     st.markdown(f"""
     <style>
-        /* ── Main app background ── */
-        .stApp {{
-            {bg_css}
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
-            background-repeat: no-repeat;
-        }}
-
-        /* ── Dark overlay so text stays readable ── */
-        .stApp::before {{
-            content: "";
-            position: fixed;
-            inset: 0;
-            background: rgba(0, 5, 20, {overlay_opacity});
-            z-index: 0;
-            pointer-events: none;
-        }}
-
-        /* ── Sidebar gets a matching semi-transparent look ── */
-        [data-testid="stSidebar"] {{
-            background: rgba(5, 15, 35, 0.82) !important;
-            backdrop-filter: blur(12px);
-            border-right: 1px solid rgba(255, 255, 255, 0.08);
-        }}
-
-        /* ── All main content sits above the overlay ── */
-        .main .block-container {{
-            position: relative;
-            z-index: 1;
-        }}
+    .stApp {{
+        background-image: {bg};
+        background-size: cover;
+    }}
     </style>
     """, unsafe_allow_html=True)
-
 
 # ─────────────────────────────────────────────
 # EMAIL ALERT FUNCTION
