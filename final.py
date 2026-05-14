@@ -171,8 +171,7 @@ def send_alert_to_team(team_df, sender_email, sender_password, subject, body):
 st.set_page_config(page_title="AQIS - Air Quality Intelligence System", layout="wide")
 
 # ✅ APPLY BACKGROUND IMAGE
-set_background(image_path="air.png", overlay_opacity=0.45)
-
+set_background(image_path="air.png")
 # ════════════════════════════════════════════════════════════════
 # ════════════════════════════════════════════════════════════════
 
