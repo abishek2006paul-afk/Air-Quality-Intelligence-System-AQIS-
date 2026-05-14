@@ -18,7 +18,6 @@ from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import confusion_matrix
 import plotly.express as px
-import plotly.graph_objects as go
 from datetime import datetime
 import base64
 import smtplib
