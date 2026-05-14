@@ -105,6 +105,7 @@ def set_background(image_path=None, image_url=None, overlay_opacity=0.55):
     """, unsafe_allow_html=True)
 
 
+
 # ─────────────────────────────────────────────
 # EMAIL ALERT FUNCTION
 # ─────────────────────────────────────────────
