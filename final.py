@@ -105,7 +105,6 @@ def set_background(image_path=None, image_url=None, overlay_opacity=0.55):
     """, unsafe_allow_html=True)
 
 
-
 # ─────────────────────────────────────────────
 # EMAIL ALERT FUNCTION
 # ─────────────────────────────────────────────
@@ -226,27 +225,10 @@ def send_alert_to_team(team_df, sender_email, sender_password, subject, body):
 # ─────────────────────────────────────────────
 st.set_page_config(page_title="AQIS - Air Quality Intelligence System", layout="wide")
 
+# ✅ APPLY BACKGROUND IMAGE
+set_background(image_path="air.png", overlay_opacity=0.45)
+
 # ════════════════════════════════════════════════════════════════
-#  🖼️  BACKGROUND IMAGE — Edit this section to change the image
-# ════════════════════════════════════════════════════════════════
-st.markdown("""
-<style>
-    .stApp {
-        background: linear-gradient(135deg, 
-            #000000 0%, 
-            #0a0a1a 25%, 
-            #0d0d2b 50%, 
-            #0a0a1a 75%, 
-            #000000 100%);
-        background-attachment: fixed;
-    }
-    [data-testid="stSidebar"] {
-        background: rgba(5, 5, 20, 0.92) !important;
-        backdrop-filter: blur(12px);
-        border-right: 1px solid rgba(51, 102, 204, 0.2);
-    }
-</style>
-""", unsafe_allow_html=True) 
 # ════════════════════════════════════════════════════════════════
 
 st.markdown("""
@@ -358,7 +340,7 @@ st.markdown("""
 @st.cache_resource
 def load_model_and_data():
     try:
-        df = pd.read_csv("./air.csv")
+        df = pd.read_csv(r"C:\Users\Admin\Desktop\python basic\project weather ass\air.csv")
         df.columns = df.columns.str.strip()
         num_cols = df.select_dtypes(include=[np.number]).columns.tolist()
         df[num_cols] = df[num_cols].fillna(df[num_cols].mean())
